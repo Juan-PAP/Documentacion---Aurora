@@ -114,3 +114,51 @@ Este diagrama tambien corresponde al Arquetipo de Referencia de la aplicación.
 Este diagrama tambien corresponde ala Arquitectura de Referencia de la aplicación.
 
 ---
+
+## **2. Componentes**
+
+El diagrama de componentes representa la estructura lógica con la que esta construida Aurora, identificando los módulos que componen la solución tanto en el Backend como en el Frontend, así como sus dependencias internas.
+
+### **2.1 Componentes del Backend**
+
+| Componente | Anotación | Descripción |
+| ----------- | ----------- | ------------- |
+| **aurora-backend** | `<<jar>>` | Núcleo funcional que contiene la lógica de negocio de la ferretería, exponiendo los servicios a traves de una API REST. |
+| **Java 26** | `<<jre>>` | Entorno de ejecución (Java Runtime Environment) y lenguaje de programación seleccionado para compilar y ejecutar el sistema. |
+| **Spring Framework 7** | `<<framework>>` | Framework subyacente que provee el motor de inyección de dependencias (Inversion of Control) y la arquitectura base del backend. |
+| **Spring boot 4.0.6** | `<<parent>>` | Orquestador principal que autoconfigura el proyecto, provee la estructura inicial y gestiona las versiones de todas las dependencias. |
+| **Posgresql 42.7.10** | `<<jar>>` | Controlador (Driver JDBC) requerido para establecer la conexión física entre la aplicación y la base de datos relacional PostgreSQL. |
+| **mapstruct 1.5.5.Fina** | `<<jar>>` | Herramienta de generación de código que automatiza el mapeo y transformación de datos entre Entidades, Dominios y DTOs. |
+| **spring-boot-starter-webmvc** | `<<jar>>` | Módulo encargado de exponer y gestionar los endpoints de la API REST para recibir las peticiones HTTP del Frontend. |
+| **spring-boot-starter-data-jpa** | `<<jar>>` | Capa de persistencia que maneja el mapeo objeto-relacional (ORM), facilitando las consultas y guardado de datos en PostgreSQL. |
+| **spring-boot-starter-data-redis** | `<<jar>>` | Módulo de integración que permite almacenar y consultar datos de alta recurrencia en la memoria caché de Redis. |
+| **spring-boot-starter-security** | `<<jar>>` | Módulo de seguridad encargado de proteger los endpoints, validar tokens JWT y gestionar los roles de los usuarios. |
+| **spring-boot-starter-validation** | `<<jar>>` | Provee validaciones de entrada (Como campos obligatorios, formatos válidos) antes de que la información llegue a la lógica de negocio. |
+| **spring-boot-starter-actuator** | `<<jar>>` | Expone métricas operativas y endpoints de estado (health checks) para que herramientas de monitoreo evalúen el rendimiento. |
+| **spring-boot-starter-webmvc-test** | `<<jar>>` | Librería de pruebas que permite simular peticiones HTTP (MockMvc) para validar el comportamiento de los controladores REST. |
+| **spring-boot-starter-data-jpa-test** | `<<jar>>` | Librería que provee un entorno aislado para realizar pruebas unitarias y de integración sobre los repositorios de base de datos. |
+| **spring-boot-starter-data-redis-test** | `<<jar>>` | Utilidades para simular y probar las interacciones y el almacenamiento temporal en la caché de Redis. |
+| **spring-boot-starter-security-test** | `<<jar>>` | Herramientas que permiten simular contextos de seguridad y usuarios autenticados durante las pruebas automatizadas. |
+| **spring-boot-starter-validation-test** | `<<jar>>` | Dependencia utilizada para probar y verificar que las reglas de validación de los modelos de datos se apliquen correctamente. |
+| **spring-boot-starter-actuator-test** | `<<jar>>` | Entorno de pruebas específico para verificar que los endpoints de monitoreo y las métricas se estén exponiendo correctamente. |
+
+### **2.2 Diagrama de Componentes del Backend**
+
+![omponentes del Backend](DiagramaDeComponentesDelBackend.png)
+
+## **2.3 Componentes del Frontend**
+
+| Componente | Anotación | Descripción |
+| ----------- | ----------- | ------------- |
+| **aurora-frontend** | `<<app>>` | Núcleo interactivo del sistema. Contiene la interfaz de usuario utilizada por los empleados de la ferretería para gestionar ventas, inventario y reportes. |
+| **vue 3.5.32** | `<<parent>>` | Framework progresivo principal de JavaScript, utilizado como motor base para construir las interfaces de usuario de forma estructurada por componentes. |
+| **typescript** | `<<framework>>` | Lenguaje de programación (superconjunto de JavaScript) que añade tipado estricto, mejorando la detección de errores y la mantenibilidad del código del Frontend. |
+| **vue-router 5.0.4** | `<<lib>>` | Librería encargada del enrutamiento en el lado del cliente. Permite la navegación fluida entre los distintos módulos del negocio sin tener que recargar la página completa. |
+| **@auth0/auth0-vue 2.6.1** | `<<lib>>` | SDK oficial de Auth0 para Vue. Gestiona el flujo de autenticación (inicio de sesión), la seguridad de las rutas y la administración de los tokens en el navegador. |
+| **bootstrap 5.3.2** | `<<framework>>` | Framework de diseño (CSS/JS) utilizado para maquetar la interfaz, garantizando que el sistema sea visualmente consistente y responsivo en diferentes pantallas de la ferretería. |
+
+### **2.2 Diagrama de Componentes del Frontend**
+
+![Componentes del Frontend](DiagramaDeComponentesDelFrontend.png)
+
+---
