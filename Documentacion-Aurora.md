@@ -238,3 +238,310 @@ Organización del código fuente del Frontend de Aurora desarrollado en Vue. La 
 ### **3.3 Imagen del Diagrama de Paquetes — Frontend**
 
 ![Diagrama de Paquetes — Frontend](DiagramaPaquetesFrontend.png)
+
+## **4. Diagrama de Secuencia**
+
+*(Espacio reservado para el diagrama de secuencia. Se agregará una vez esté definido el flujo de interacción entre los componentes).*
+
+---
+
+## **5. Drivers Arquitectónicos**
+
+### **5.1 Matriz de Trade-off (Priorización de Atributos de Calidad)**
+
+**Descripción:** La siguiente tabla define la priorización de los atributos de calidad para el sistema Aurora, donde el número nueve (9) representa el atributo de mayor prioridad y el uno (1) representa el atributo de menor prioridad.
+
+| Atributos de Calidad | 9 | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| Disponibilidad | X | | | | | | | | |
+| Rendimiento | | X | | | | | | | |
+| Usabilidad | | | X | | | | | | |
+| Seguridad | | | | X | | | | | |
+| Trazabilidad | | | | | X | | | | |
+| Capacidad de ser administrado | | | | | | X | | | |
+| Costo | | | | | | | X | | |
+| Escalabilidad | | | | | | | | X | |
+| Capacidad de ser mantenido | | | | | | | | | X |
+
+---
+
+### **5.2Ponderación de Atributos de Calidad por Roles**
+
+#### **5.2.1 Votación de los Atributos de Calidad**
+
+**Descripción:** Esta tabla refleja la votación y el peso relativo (ponderación real) que cada rol principal del sistema (Administrador, Vendedor, Operador de inventario) le asigna a los diferentes atributos de calidad, permitiendo alinear la arquitectura con las necesidades reales de los usuarios.
+
+| Atributos de Calidad | Administrador | Vendedor | Operador de inventario | Total de votos | Ponderación real |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| Disponibilidad | 7 | 9 | 8 | 24 | 17,78% |
+| Rendimiento | 8 | 8 | 5 | 21 | 15,56% |
+| Usabilidad | 5 | 7 | 7 | 19 | 14,07% |
+| Seguridad | 6 | 6 | 6 | 18 | 13,33% |
+| Trazabilidad | 3 | 5 | 9 | 17 | 12,59% |
+| Capacidad de ser administrado | 9 | 2 | 3 | 14 | 10,37% |
+| Costo | 4 | 3 | 2 | 9 | 6,67% |
+| Escalabilidad | 2 | 4 | 4 | 10 | 7,41% |
+| Capacidad de ser mantenido | 1 | 1 | 1 | 3 | 2,22% |
+| **Total** | **45** | **45** | **45** | **135** | **100,00%** |
+
+#### **5.2.2 Mapa de Empatía**
+
+![Mapa de Empatía](MapaDeEmpatia.png)
+
+---
+
+### **5.3 Escenarios de Calidad Priorizados**
+
+**Descripción:** A continuación se detallan los escenarios de calidad de mayor prioridad para Aurora, los cuales guían las decisiones arquitectónicas para garantizar que el software cumpla con las expectativas de rendimiento, disponibilidad, seguridad, trazabilidad y escalabilidad.
+
+| Código escenario de calidad | Descripción escenario de calidad |
+| :--- | :--- |
+| `ESC-CAL-REN-0001` | Cada transacción del sistema debe ejecutarse en un tiempo menor o igual al tiempo máximo definido en la matriz de tiempos del sistema. |
+| `ESC-CAL-DIS-0001` | Mantener disponible el sistema para los usuarios al menos el 95% del tiempo mensual. |
+| `ESC-CAL-DIS-0002` | Cuando se ejecuta un mantenimiento del sistema, el servicio permanece disponible para los usuarios sin interrupciones. |
+| `ESC-CAL-TRA-0011` | Al momento de consultar el historial de registros históricos del sistema, el sistema despliega el historial garantizando que todos los registros sean mostrados en formato de solo lectura y no puedan ser alterados ni modificados. |
+| `ESC-CAL-SEG-0001` | Iniciar sesión exitosamente con credenciales válidas. |
+| `ESC-CAL-SEG-0002` | Al momento de que un usuario intente acceder a un módulo para el cual no posee permisos, el sistema debe rechazar la solicitud, mostrar un mensaje de: "Acceso denegado: Recurso no autorizado" y redirigir al usuario al módulo en que se encontraba antes de la acción. |
+| `ESC-CAL-SEG-0003` | Al momento en que un usuario intente acceder por tercera vez al sistema con credenciales inválidas, el sistema debe bloquear la cuenta del empleado durante 10 minutos para prevenir posibles ataques. |
+| `ESC-CAL-ESC-0007` | Cuando múltiples empleados utilicen el sistema al mismo tiempo, este debe permitir las operaciones concurrentes de tal manera que todos puedan llevar a cabo sus operaciones de forma satisfactoria. |
+
+---
+
+### **5.4 Especificación de Escenarios de Calidad**
+
+#### **Escenario: ESC-CAL-REN-0001 (Rendimiento)**
+
+| Atributo | Detalle |
+| :--- | :--- |
+| **Código** | `ESC-CAL-REN-0001` |
+| **Nombre** | Cada transacción del sistema debe ejecutarse en un tiempo menor o igual al tiempo máximo definido en la matriz de tiempos del sistema. |
+| **Objetivo** | Asegurar que cada una de las transacciones del sistema de la ferretería se ejecute en un tiempo de respuesta menor o igual al tiempo máximo establecido para cada operación dentro de la matriz de tiempos. |
+| **Criterio éxito** | Cada transacción ejecutada en el sistema ha respondido en un tiempo menor o igual al tiempo máximo establecido para dicha operación en la matriz de tiempos. |
+| **Prerrequisitos** | 1. El usuario debe tener los permisos necesarios para poder realizar la transacción deseada.<br>2. El sistema debe contar con la información necesaria para ejecutar la transacción deseada. |
+
+**Detalle del Escenario:**
+
+| Fuente del estímulo | Estímulo | Ambiente | Artefacto | Respuesta | Medida de la respuesta |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| Cualquier usuario de la aplicación | Ejecución de una transacción específica en el sistema | Operación normal en ambiente productivo | Sistema | El sistema procesa la transacción definida y envía un mensaje indicando que la transacción se ha procesado. | Cada transacción se completó en un tiempo de respuesta menor o igual al tiempo definido dentro de la matriz de tiempos |
+
+---
+
+#### **Matriz de Tiempos del Sistema**
+
+Para dar cumplimiento al escenario `ESC-CAL-REN-0001`, se establecen los siguientes tiempos:
+
+**1. Datos mínimos (Transacciones rápidas)**
+
+| Transacción | Tiempo Máximo | Criterio de rendimiento esperado |
+| :--- | :--- | :--- |
+| Inicio de sesión | ≤3 segundos por operación | El acceso al sistema debe ser inmediato con credenciales válidas. |
+| Registrar nuevo producto | ≤3 segundos por operación | El sistema debe confirmar el registro del producto sin retrasos. |
+| Editar producto existente | ≤3 segundos por operación | Los cambios deben guardarse y mostrarse de forma inmediata. |
+| Consultar un producto (ej. buscar "Tubo PVC" en el catálogo) | ≤2 segundos por consulta | Los resultados de búsqueda deben mostrarse casi en tiempo real. |
+| Registrar una venta | ≤3 segundos por operación | El sistema debe confirmar la venta y actualizar el inventario. |
+| Registrar un cliente | ≤3 segundos por operación | El sistema debe confirmar el registro del cliente sin retraso perceptible. |
+| Consultar un cliente | ≤2 segundos por consulta | El empleado debe ver la información del cliente de forma inmediata. |
+| Actualizar precio de un producto | ≤2 segundos por operación | El nuevo precio debe reflejarse en el sistema sin retraso perceptible. |
+| Alerta de vencimiento | ≤2 segundos por operación | La alerta debe generarse y registrarse de forma inmediata al detectar el vencimiento. |
+| Registrar nuevo lote de mercancía | ≤3 segundos por operación | El sistema debe confirmar el ingreso del lote y actualizar el inventario sin retrasos perceptibles. |
+| Registrar ajuste de inventario a un lote | ≤3 segundos por operación | El ajuste debe guardarse con su trazabilidad (usuario, fecha, motivo) de forma inmediata. |
+| Cambiar estado de un producto (Activo/Inactivo) | ≤2 segundos por operación | El cambio de estado debe reflejarse en el catálogo de ventas de forma inmediata. |
+| Cerrar sesión del sistema | ≤2 segundos por operación | La sesión debe destruirse de forma casi inmediata al ejecutar el cierre para proteger el acceso. |
+| Registrar una devolución de venta | ≤3 segundos por operación | El sistema debe confirmar la devolución y generar el ajuste de inventario compensatorio sin retrasos. |
+| Consultar historial de ventas de un cliente | ≤3 segundos por consulta | El historial del cliente debe cargarse de forma inmediata sin interrumpir la atención en el mostrador. |
+| Generación automática de alerta de stock bajo | ≤2 segundos por operación | La alerta debe generarse y mostrarse en el dashboard de forma inmediata al detectar el umbral. |
+
+**2. Datos máximos (Transacciones pesadas / Reportes)**
+
+| Transacción | Tiempo Máximo | Criterio de rendimiento esperado |
+| :--- | :--- | :--- |
+| Consultar historial de ventas (ej. ventas del mes o histórico general) | ≤15 segundos por consulta | El historial debe cargarse sin retraso perceptible independientemente del volumen. |
+| Generar reporte de ventas (ej. reporte mensual o por rango de fechas) | ≤10 segundos por operación | El reporte debe completarse sin errores y estar disponible para su revisión. |
+| Generar reporte de inventario (ej. reporte de stock actual o productos próximos a vencer) | ≤10 segundos por operación | El reporte debe completarse sin errores y estar disponible para su revisión. |
+
+**3. Datos generales (Resto de transacciones)**
+
+| Transacción | Tiempo Máximo | Criterio de rendimiento esperado |
+| :--- | :--- | :--- |
+| Todas las demás transacciones del sistema no especificadas en las secciones anteriores | ≤5 segundos por operación | El sistema debe responder en un tiempo máximo de 5 segundos para cualquier transacción no listada explícitamente, ante la incertidumbre de su complejidad técnica real durante el desarrollo. |
+
+---
+
+#### **Escenario: ESC-CAL-DIS-0001 (Disponibilidad)**
+
+| Atributo | Detalle |
+| :--- | :--- |
+| **Código** | `ESC-CAL-DIS-0001` |
+| **Nombre** | Mantener disponible el sistema para los usuarios al menos el 95% del tiempo mensual. |
+| **Objetivo** | Garantizar que el sistema se encuentre activo el 95% del tiempo mensual. |
+| **Criterio éxito** | El sistema mantiene un nivel de disponibilidad que asegura que se puede realizar cualquier transacción en el sistema durante al menos el 95% del tiempo mensual. |
+| **Prerrequisitos** | 1. El usuario debe tener los permisos necesarios para realizar la transacción deseada.<br>2. El sistema debe contar con la información base necesaria para ejecutar la transacción solicitada. |
+
+**Detalle del Escenario:**
+
+| Fuente del estímulo | Estímulo | Ambiente | Artefacto | Respuesta | Medida de la respuesta |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| Cualquier usuario de la aplicación | Realizar cualquier transacción en el sistema | Operación normal en ambiente productivo | Sistema | El sistema responde a la solicitud realizada. | El sistema logra permanecer disponible el 95% del tiempo mensual. |
+
+---
+
+#### **Escenario: ESC-CAL-DIS-0002 (Disponibilidad)**
+
+| Atributo | Detalle |
+| :--- | :--- |
+| **Código** | `ESC-CAL-DIS-0002` |
+| **Nombre** | Cuando se ejecuta un mantenimiento del sistema, el servicio permanece disponible para los usuarios sin interrupciones. |
+| **Objetivo** | Garantizar que la ejecución de tareas de mantenimiento del sistema (actualizaciones, respaldos, corrección de errores) no genere interrupciones en el servicio independientemente del momento en que el mantenimiento sea programado. |
+| **Criterio éxito** | El mantenimiento del sistema se ha ejecutado exitosamente sin haber generado ninguna interrupción en el servicio. |
+| **Prerrequisitos** | _ |
+
+**Detalle del Escenario:**
+
+| Fuente del estímulo | Estímulo | Ambiente | Artefacto | Respuesta | Medida de la respuesta |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| Administrador | Llevar a cabo una tarea de mantenimiento (actualización, respaldo, solución de errores). | Operación normal en ambiente productivo | Sistema | El sistema ejecuta las tareas de mantenimiento. | El mantenimiento se completa exitosamente y el sistema permanece disponible sin que los usuarios experimenten interrupciones del servicio. |
+
+---
+
+#### **Escenario: ESC-CAL-TRA-0011 (Trazabilidad)**
+
+| Atributo | Detalle |
+| :--- | :--- |
+| **Código** | `ESC-CAL-TRA-0011` |
+| **Nombre** | Al momento de consultar el historial de registros históricos del sistema, el sistema despliega el historial garantizando que todos los registros sean mostrados en formato de solo lectura y no puedan ser alterados ni modificados. |
+| **Objetivo** | Garantizar la integridad y registro de los datos históricos del negocio (transacciones, movimientos de inventario, eventos automáticos del sistema), asegurando que sirvan como insumo exacto de los movimientos del negocio siendo a prueba de manipulaciones, incluso a nivel de base de datos. |
+| **Criterio éxito** | El usuario ha consultado el historial de registros históricos y el sistema ha desplegado los registros en modo de solo lectura, previniendo y rechazando cualquier intento técnico o de interfaz para editar, sobreescribir o borrar un registro previamente guardado. |
+| **Prerrequisitos** | 1. El usuario debe tener una sesión activa en el sistema. |
+
+**Detalle del Escenario:**
+
+| Fuente del estímulo | Estímulo | Ambiente | Artefacto | Respuesta | Medida de la respuesta |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| Cualquier usuario de la aplicación | Consultar el historial de transacciones o registros históricos. | Operación normal en ambiente productivo | Sistema | El sistema despliega el historial de transacciones en formato de solo lectura y envía un mensaje indicando que la consulta se ha procesado. | El 100% de los registros consultados mantienen su información sin modificación, rechazando incluso a nivel de base de datos, cualquier intento de edición y eliminación de la información desde el momento de su creación. |
+
+---
+
+#### **Escenario: ESC-CAL-SEG-0001 (Seguridad)**
+
+| Atributo | Detalle |
+| :--- | :--- |
+| **Código** | `ESC-CAL-SEG-0001` |
+| **Nombre** | Iniciar sesión exitosamente con credenciales válidas. |
+| **Objetivo** | Asegurar que un usuario de la ferretería pueda ingresar al sistema de forma satisfactoria únicamente cuando su nombre de usuario y contraseña sean válidos y su cuenta se encuentre activa. |
+| **Criterio éxito** | El usuario ha ingresado un nombre de usuario y contraseña válidos y su cuenta está activa, por lo que el sistema le permite ingresar dentro de la aplicación, siendo redireccionado a la página principal de bienvenida del sistema de la ferretería. |
+| **Prerrequisitos** | 1. El usuario debe estar registrado en el sistema de la ferretería.<br>2. La cuenta del usuario debe estar activa y vigente.<br>3. El usuario no debe tener una sesión activa en el sistema. |
+
+**Detalle del Escenario:**
+
+| Fuente del estímulo | Estímulo | Ambiente | Artefacto | Respuesta | Medida de la respuesta |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| Cualquier usuario de la aplicación | Ingresar nombre de usuario, contraseña y ejecutar la acción iniciar sesión. | Operación normal en ambiente productivo | Sistema | El usuario ingresa dentro de la aplicación y es redireccionado a la página principal de bienvenida del sistema. | El usuario ingresado realmente existe con el usuario y contraseña ingresados y, por ende, ingresa a la aplicación y es redireccionado a la página principal de bienvenida de manera exitosa. |
+
+---
+
+#### **Escenario: ESC-CAL-SEG-0002 (Seguridad)**
+
+| Atributo | Detalle |
+| :--- | :--- |
+| **Código** | `ESC-CAL-SEG-0002` |
+| **Nombre** | Al momento de que un usuario intente acceder a un módulo para el cual no posee permisos, el sistema debe rechazar la solicitud, mostrar un mensaje de: "Acceso denegado: Recurso no autorizado" y redirigir al usuario al módulo en que se encontraba antes de la acción. |
+| **Objetivo** | Asegurar que un usuario de la ferretería no pueda acceder a un módulo para el cual no posee los permisos requeridos según su rol, de forma que el sistema rechace la solicitud, notifique al empleado y lo redirija a la interfaz en la que se encontraba. |
+| **Criterio éxito** | El sistema rechaza la petición solicitada, muestra un mensaje claro explicando que no tiene autorización para acceder a esos recursos y redirige al usuario a la interfaz en que se encontraba antes de realizar la acción. |
+| **Prerrequisitos** | 1. El usuario debe tener una sesión iniciada en el sistema.<br>2. El usuario tiene un rol asignado en el sistema. |
+
+**Detalle del Escenario:**
+
+| Fuente del estímulo | Estímulo | Ambiente | Artefacto | Respuesta | Medida de la respuesta |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| Cualquier usuario de la aplicación | El usuario intenta acceder a un módulo para el cual no posee los permisos de acuerdo a su rol. | Operación normal en ambiente productivo | Sistema | El sistema rechaza el acceso, muestra un mensaje y redirige al usuario al módulo previo. | El 100% de los intentos de acceso no autorizados son bloqueados, sin exponer ninguna información o vista parcial del módulo restringido. |
+
+---
+
+#### **Escenario: ESC-CAL-SEG-0003 (Seguridad)**
+
+| Atributo | Detalle |
+| :--- | :--- |
+| **Código** | `ESC-CAL-SEG-0003` |
+| **Nombre** | Al momento en que un usuario intente acceder por tercera vez al sistema con credenciales inválidas, el sistema debe bloquear la cuenta del empleado durante 10 minutos para prevenir posibles ataques. |
+| **Objetivo** | Asegurar que el sistema bloquee la cuenta de un usuario de la ferretería durante 10 minutos luego de superar el número máximo de 3 intentos fallidos de inicio de sesión, protegiendo al sistema de posibles ataques. |
+| **Criterio éxito** | Tras el tercer intento fallido consecutivo, la cuenta queda inhabilitada temporalmente para iniciar sesión, rechazando cualquier intento de acceso, incluso si luego ingresan la contraseña correcta, hasta que transcurran los 10 minutos. |
+| **Prerrequisitos** | 1. El usuario debe estar registrado en el sistema de la ferretería.<br>2. El usuario ha intentado ingresar 2 veces con credenciales inválidas. |
+
+**Detalle del Escenario:**
+
+| Fuente del estímulo | Estímulo | Ambiente | Artefacto | Respuesta | Medida de la respuesta |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| Cualquier usuario de la aplicación | Ingresar una tercera vez con credenciales inválidas. | Operación normal en ambiente productivo | Sistema | El sistema bloquea la cuenta durante 10 minutos y muestra el mensaje "Cuenta bloqueada: has superado el número máximo de intentos". | El 100% de los terceros intentos de iniciar sesión con credenciales inválidas son bloqueados. |
+
+---
+
+#### **Escenario: ESC-CAL-ESC-0007 (Escalabilidad)**
+
+| Atributo | Detalle |
+| :--- | :--- |
+| **Código** | `ESC-CAL-ESC-0007` |
+| **Nombre** | Cuando múltiples empleados utilicen el sistema al mismo tiempo, este debe permitir las operaciones concurrentes de tal manera que todos puedan llevar a cabo sus operaciones de forma satisfactoria. |
+| **Objetivo** | Garantizar que se gestionen correctamente los recursos del sistema, permitiendo las operaciones concurrentes de los diferentes usuarios de la ferretería para que todos puedan realizar sus tareas sin degradación del servicio. |
+| **Criterio éxito** | Se realizan operaciones de forma simultánea en el sistema exitosamente, manteniendo la estabilidad y permitiendo que todos los usuarios completen sus transacciones de forma satisfactoria. |
+| **Prerrequisitos** | 1. Los usuarios deben estar registrados y con sesión activa en el sistema.<br>2. Los usuarios inician transacciones de forma simultánea. |
+
+**Detalle del Escenario:**
+
+| Fuente del estímulo | Estímulo | Ambiente | Artefacto | Respuesta | Medida de la respuesta |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| Cualquier usuario de la aplicación | Dos o más transacciones se realizan en el mismo instante. | Operación normal en ambiente productivo | Sistema | El sistema procesa todas las solicitudes recibidas sin errores de bloqueo. | El sistema soporta las operaciones concurrentes de los múltiples usuarios, de manera que cada uno pueda realizar sus transacciones de manera satisfactoria. |
+
+---
+
+## **6. Funcionalidades Críticas**
+
+**Descripción:** En esto se detallan los requisitos funcionales que se consideran críticos para la operación del sistema Aurora.
+
+| Identificador | Requisito Funcional | Justificación |
+| :--- | :--- | :--- |
+| `RF-INV-05` | El sistema debe actualizar automáticamente la cantidad total actual del producto en el inventario al agregar o modificar un lote perteneciente al mismo. | La cantidad actual de cada producto es la base sobre la que funcionan varias funcionalidades del sistema, como: las alertas de stock bajo, el estado de agotado, la validación de disponibilidad en ventas y el sistema FEFO. Si esta cifra no se mantiene consistente y actualizada en todo momento, el sistema operaría sobre un dato incorrecto, lo que generaría que se comprometa la integridad de los datos de todo el sistema, haciendo que las decisiones tomadas a partir de ellos no reflejen la realidad del negocio. |
+| `RF-INV-10` | El sistema debe generar una alerta visual en el módulo de inventario para los administradores y operadores de inventario cuando un lote perecedero se encuentre a 30, 15 o 7 días de su fecha de vencimiento, asignándole automáticamente el estado 'Próximo a vencer'. | Es fundamental que el sistema notifique con suficiente tiempo de anticipación el vencimiento de los lotes, porque sin esta información el administrador no tiene forma de actuar antes de que el producto caduque, lo que generaría pérdidas financieras por productos vencidos que el negocio no pudo detectar ni tomar medidas a tiempo. |
+| `RF-INV-11` | El sistema debe generar una alerta visual en el módulo de inventario para los administradores y operadores de inventario, cuando la cantidad actual de un producto sea menor o igual al stock mínimo configurado para ese producto y asignándole el estado 'stock bajo'. | Es importante porque si un producto se llega a agotar sin previo aviso, los clientes no podrán realizar compras de dicho producto, lo que generaría pérdidas financieras al negocio al no estar vendiendo por falta de stock. Además de esto, afectaría la confianza del cliente al querer realizar próximas compras a futuro. |
+| `RF-INV-06` | El sistema debe asignarle automáticamente a un producto el estado 'agotado' cuando este no cuente con más stock en el inventario, siendo que los productos que se encuentren en este estado, no podrán ser seleccionados en nuevas ventas. | Es muy importante que el sistema bloquee automáticamente la selección de un producto agotado en el proceso de venta, porque de lo contrario un vendedor podría iniciar y confirmar una venta con un producto del cual no hay existencia física en la ferretería; esto generaría un compromiso con el cliente que no se puede cumplir, ocasionando pérdida de imagen, conflictos con el cliente y descuadres financieros en la operación diaria del negocio. |
+| `RF-INV-12` | El sistema debe asignar automáticamente el estado 'vencido' a cualquier lote el cual su fecha de vencimiento haya superado la fecha límite, siendo que los lotes que se encuentren en este estado no podrán ser seleccionados en nuevas ventas. | Es crítico que el sistema bloquee automáticamente la comercialización de cualquier lote cuya fecha de vencimiento haya sido superada, porque vender un producto vencido a un cliente puede conllevar a problemas legales, pero sobre todo daño a la imagen y reputación del negocio frente a la comunidad y a futuros clientes. |
+| `RF-VEN-03` | El sistema debe calcular y mostrar el total de la venta de forma dinámica cada vez que el vendedor agregue, elimine o modifique la cantidad de un producto en el carrito. | Es muy importante que el sistema calcule y muestre de forma dinámica el total de la venta mientras esta se encuentre en proceso, porque de lo contrario el vendedor no tendría visibilidad en tiempo real del valor acumulado de la compra del cliente, llevando a confirmar una venta con un monto incorrecto, generando descuadres financieros, conflictos con el cliente y pérdida de confianza tanto de la ferretería como del sistema como herramienta de gestión del negocio. |
+| `RF-VEN-06` | El sistema debe verificar en tiempo real la disponibilidad actual del stock justo antes de confirmar una venta, garantizando que las cantidades solicitadas siguen disponibles en el inventario. | Es crítico verificar la disponibilidad del stock en el instante exacto previo al confirmar la venta porque, entre el momento en que el vendedor agrega un producto al carrito y el momento en que confirma la operación, otro vendedor pudo haber vendido esa misma unidad en otro equipo. Sin esta validación final, el sistema puede confirmar dos ventas del mismo producto con una sola unidad disponible, generando una venta sin respaldo físico real en la ferretería. |
+| `RF-VEN-07` | El sistema, en el momento en que un vendedor confirme una venta de un producto perecedero, debe asegurar que se venda un producto del lote próximo a vencer (sistema FEFO — First Expired, First Out). | Es fundamental que el sistema aplique el método FEFO al momento de confirmar una venta, porque de lo contrario se venderían primero los lotes con mayor vida útil y los más próximos a vencer quedarían en bodega hasta caducar, generando pérdidas financieras directas en el negocio, por lo que se debe priorizar que se realice la venta a los productos más próximos a vencer. |
+| `RF-VEN-09` | El sistema debe descontar automáticamente del inventario la cantidad vendida de cada producto al momento de confirmar una venta, actualizando la cantidad actual del producto y de los lotes correspondientes al que se descontó. | Es crítico que el inventario se actualice de forma inmediata y automática al confirmarse cada venta, porque de no hacerlo, el stock reflejado en el sistema no correspondería con la realidad física sobre la mercancía verdaderamente existente en el negocio. Esto llevaría al administrador a tomar decisiones de compra basadas en datos incorrectos, generando sobrestock o desabastecimiento, ambos casos conllevando a consecuencias financieras para la ferretería. |
+
+---
+
+## **7. Restricciones Técnicas**
+
+| Tipo | Restricción técnica | Justificación |
+|---|---|---|
+| Prácticas de diseño | El diseño y desarrollo del software debe propender por seguir los principios SOLID. | El diseño y desarrollo del software de Aurora debe propender por seguir los principios SOLID, asegurando que cada módulo del sistema (productos, inventario, ventas, clientes, reportes y seguridad) tenga una responsabilidad clara y bien delimitada, facilitando que futuras modificaciones o expansiones del sistema no introduzcan fallos en funcionalidades ya operativas de la ferretería. |
+| Prácticas de diseño | Se debe propender por la construcción de aplicaciones que sigan los principios del Manifiesto de aplicaciones reactivas | Utilizar el Manifiesto de Aplicaciones Reactivas proporciona una guía fundamentada en principios sólidos para el diseño de sistemas que sean resilientes, escalables y capaz de reaccionar rápidamente a eventos del negocio en tiempo real, como cambios en el stock del inventario, generación de ventas o la generación de alertas de vencimiento. Esto mejora la experiencia de los usuarios de la ferreteria al recibir información confiable y actualizada en tiempo real, contribuyendo a una solución más robusta y eficiente. |
+| Prácticas de diseño | Se debe propender el uso de building blocks para la reutilizacion de piezas ya existentes | Se debe propender por el uso de building blocks y componentes reutilizables ya existentes para la construcción del sistema, evitando construir desde cero la solución a un problema el cual que ya está resuelto, permitiendo al equipo enfocarse en la lógica propia del negocio como la gestión de ventas, inventario y alertas. |
+| Prácticas DEVOPS | Propender por el uso de prácticas DevOps, relacionadas con las estrategias de integración continua, entrega continua y despliegue continuo | La implementación de DevOps es fundamental para garantizar la entrega continua, la eficiencia operativa y la fiabilidad del sistema, permitiendo que las actualizaciones y correcciones se desplieguen de manera segura y rápida, reduciendo el riesgo de interrupciones de los diferentes servicios de la aplicación, ademas de tambien promueve la escalabilidad y la estabilidad del aplicativo, asegurando una experiencia de usuario óptima y minimizando tiempos de inactividad, para que la aplicación se mantenga disponible y confiable para los usuarios de la ferreteria. |
+| Prácticas DEVOPS | Propender por la adopción de los 12 factores de aplicación (Más los 3 extendidos) | El desarrollo de Aurora debe propender por la aplicación de los 12 factores de aplicación, lo que garantiza que nuetro sistema sea portable, escalable y fácil de mantener independientemente del entorno de la ferreteria donde este opere. Esto aplica directamente al sistema en aspectos como la gestión de dependencias del sistema, la separación de la configuración del código fuente, el manejo de logs como flujos de eventos y la correcta administración de los procesos del servidor que soportan las operaciones diarias de la ferretería. |
+| Prácticas de código limpio | Se debe propender por aplicación de prácticas de relacionadas con código limpio (Clean Code), evitando Messy Code y Code Smells | Garantiza que la plataforma sea modular, escalable y fácil de mantener, favoreciendo la legibilidad, escritura y comprendiendo del código, reduciendo la posibilidad de errores al dar nombres descriptivos a variables, métodos y clases, lo que tambien impacta directamente en la estabilidad del sistema al tener que realizar a futuro actualizaciones, mantenimientos o nueva creación de funcionalidades al sistema. |
+| Patrones de diseño | Propender por el uso de patrones de diseño y de implementación como por ejemplo patrones GoF, GRASP, DRY, KISS. | La adopción de patrones de diseño como lo son GoF, GRASP, DRY y KISS, dentro de nuestro proyecto se justifica por su capacidad para mejorar la calidad del software y facilitar su mantenimiento a lo largo del tiempo. Los patrones GoF promueven la reutilización y la modularidad del código. Los principios GRASP ayudan a asignar responsabilidades de manera clara y coherente en el diseño de clases y objetos, fomentando una estructura más comprensible y adaptable. Por otro lado, los principios DRY (Don't Repeat Yourself) y KISS (Keep It Simple, Stupid) abogan por evitar la duplicación innecesaria de código y por mantener la simplicidad en el diseño, respectivamente, lo que conduce a sistemas más legibles, mantenibles y menos propensos a errores. En conjunto, estas prácticas y principios promueven un desarrollo de software más eficiente, escalable y robusto, asegurando consistencia en el comportamiento del sistema y agilizando la implementación de mejoras sin introducir fallos en funcionalidades críticas. |
+| Marco Metodológico | Propender al uso de un controlador de versiones como lo es Git, con repositorios centralizados en GitHub | Todo el código fuente de Aurora debe estar gestionado bajo un sistema de control de versiones utilizando Git, con repositorio centralizado en GitHub. Esto garantiza que nosotros como equipo podamos trabajar de forma colaborativa sin sobrescribir el trabajo del otro, revertir versiones anteriores ante fallos en actualizaciones y mantener un historial completo de la evolución del sistema, lo cual es indispensable para la estabilidad y el mantenimiento de nuestro software a largo plazo. |
+| Marco Metodológico | Propender el uso de arquitectura en capas con separación frontend/backend y base de datos | El sistema debe propender construirse bajo una arquitectura en capas que separe claramente la interfaz de usuario (frontend), la lógica de negocio (backend) y la base de datos, comunicándose a través de una API REST. Esta separación garantiza que cambios en la interfaz no afecten la lógica del negocio y viceversa, facilita el mantenimiento independiente de cada capa y permite que el equipo de desarrollo trabaje en paralelo sobre diferentes partes del sistema sin generar conflictos. |
+
+---
+
+## **8. Restricciones de Negocio**
+
+| Tipo | Restricción de Negocio | Justificación | Plan acción |
+| --- | --- | --- | --- |
+| Humano | El cliente cuenta con una hora semanal para dedicarle al proyecto | El cliente tiene disponibilidad muy limitada para sesiones de validación y retroalimentación dado que debe atender la operación diaria de su ferretería, lo que puede retrasar la toma de decisiones clave y la aprobación de avances del sistema. | Establecer sesiones de validación cortas, focalizadas y programadas previamente, apoyadas en prototipos y documentación clara que permitan al cliente revisar y aprobar avances en el tiempo disponible sin necesidad de sesiones largas o frecuentes. |
+| Humano | El cliente es el único tomador de decisiones del negocio y en ocasiones, puede darse el caso que por fuerza mayor, no podrá asistir a sesion semanal clave del proyecto. | Al ser el dueño el único responsable de la ferretería, no puede delegar decisiones operativas del negocio a otra persona. Cuando la operación del negocio lo demande, deberá ausentarse de sesiones del proyecto, lo que puede generar que decisiones importantes queden pendientes de validación y retrasen el avance del desarrollo. | Documentar todas las decisiones tomadas en ausencia del cliente y someterlas a su aprobación en la siguiente sesión disponible. Implementar herramientas de colaboración asincrónica como documentos compartidos o grabaciones de sesiones que le permitan revisar avances sin necesidad de reuniones adicionales. |
+| Legal | El proyecto debe garantizar el cumplimiento de la Ley 1581 de 2012 de Protección de Datos Personales. | Aurora almacena datos personales de los clientes de la ferretería como nombre, número de identificación, teléfono y correo electrónico. La Ley 1581 de 2012 obliga a proteger y tratar esa información conforme a la normativa colombiana vigente, siendo una obligación jurídica no negociable cuyo incumplimiento expone al negocio a sanciones legales. | Implementar cifrado de información sensible, control de acceso por roles y políticas claras de manejo de datos, asegurando que el sistema cumpla con los lineamientos básicos de la ley. |
+| Legal | El sistema debe operar bajo las normativas comerciales y tributarias Colombianas aplicables al sector ferretero especificamente: el Registro Mercantil ante la Cámara de Comercio y el Estatuto del Consumidor (Ley 1480 de 2011). | La ferretería opera en un entorno regulado por normativas comerciales colombianas. El sistema debe respetar las reglas del negocio sin generar prácticas que puedan derivar en incumplimientos normativos, como el registro incorrecto de transacciones o la omisión de información requerida por regulación. | Validar con el cliente las obligaciones normativas específicas de su negocio antes de iniciar el desarrollo de los módulos de ventas y reportes, asegurando que el sistema registre la información necesaria para cumplir con sus obligaciones. |
+| Legal | El sistema debe impedir la comercialización de lotes con fecha de vencimiento vencida, ya que la Ley 1480 de 2011 prohíbe la venta de productos expirados y expone al negocio a sanciones y daño reputacional | En el sector ferretero, productos críticos como cementos, aditivos químicos, pegamentos y pinturas pierden sus propiedades técnicas y de seguridad al expirar. La venta de estos artículos no solo viola la Ley 1480 de 2011, exponiendo a la ferretería a multas de la Superintendencia de Industria y Comercio, sino que también pone en riesgo la integridad de las obras de los clientes y la reputación del negocio. | Implementar el bloqueo automático de lotes vencidos en el proceso de venta como funcionalidad crítica del sistema, garantizando que ningún lote con fecha de vencimiento superada pueda ser seleccionado en una nueva transacción, validando esta lógica mediante pruebas automatizadas antes de la puesta en producción |
+| Presupuesto | El proyecto tiene un presupuesto de 12'000.000 de pesos colombianos para el desarrollo del producto | El presupuesto disponible cubre los costos operativos del equipo durante el desarrollo como mantenimiento de equipos, conectividad y servicios necesarios. Este límite condiciona las decisiones tecnológicas y de infraestructura del proyecto, obligando a priorizar soluciones de bajo costo sin comprometer la calidad del sistema. | Priorizar el uso de tecnologías de código abierto. Diseñar una arquitectura modular que permita entregar el MVP (producto minimo viable) dentro del presupuesto disponible, reservando una parte del presupuesto para imprevistos operativos durante el desarrollo. |
+| Presupuesto | El sistema debe operar sin incurrir en costos de licenciamiento de software. | Una ferretería pequeña no cuenta con presupuesto para pagar licencias anuales de software. Si el sistema depende de herramientas con costos recurrentes, el negocio no podrá sostenerlo financieramente en el tiempo, haciendo inviable la solución a largo plazo. | Validar con el cliente las obligaciones normativas específicas de su negocio antes de iniciar el desarrollo de los módulos de ventas y reportes, asegurando que el sistema registre la información necesaria para cumplir con sus obligaciones comerciales y tributarias. |
+| Presupuesto | La infraestructura de despliegue del sistema no debe superar un costo mensual de $100.000 pesos colombianos para la ferretería | El costo mensual de los servidores necesarios para operar el sistema debe ser accesible para una ferretería pequeña. Si los costos de infraestructura son elevados o impredecibles, el negocio no podrá mantener el sistema activo de forma sostenida, comprometiendo su viabilidad a largo plazo. | Evaluar opciones de infraestructura de bajo costo con planes fijos y predecibles, diseñando el sistema para que su consumo de recursos sea eficiente y proporcional al volumen de operaciones de una ferretería pequeña, manteniéndose dentro del límite mensual acordado. |
+| Tiempo | El proyecto cuenta con un tiempo límite desde su inicio el 5 de febrero de 2026 hasta su lanzamiento el 5 de febrero de 2028. | El proyecto tiene una fecha límite de entrega definida, lo que condiciona el alcance de lo que puede construirse y obliga a priorizar las funcionalidades más críticas dentro del tiempo disponible, evitando desviaciones que comprometan la entrega del sistema. | Priorizar el desarrollo del arquitectura evolutiva desde las primeras iteraciones del proyecto, asegurando que los módulos críticos de ventas, inventario y alertas estén operativos antes de abordar módulos de menor impacto en el negocio. |
+| Tiempo | Las validaciones con el cliente están sujetas a su disponibilidad, lo que puede generar tiempos de espera entre validaciones. | Si el cliente no puede validar un avance oportunamente, el equipo puede quedar bloqueado esperando aprobación antes de continuar con el siguiente módulo, generando tiempos muertos que afectan el ritmo de desarrollo del proyecto. | Planificar las sesiones de validación con antelación y tenerlas agendadas desde el inicio del proyecto. En caso de que el cliente no pueda asistir, contar con documentación y prototipos que le permitan validar de forma asincrónica sin detener el avance del equipo. |
+| Tiempos | La puesta en producción del sistema no puede realizarse en horario comercial de la ferretería para no interrumpir su operación diaria. | La ferretería opera en horario comercial atendiendo clientes de forma continua. Realizar despliegues, actualizaciones o migraciones durante ese horario podría interrumpir las ventas y generar pérdidas al negocio, por lo que cualquier intervención técnica debe realizarse fuera de ese horario. | Planificar todos los despliegues, actualizaciones y migraciones del sistema en horarios no comerciales — noches o fines de semana — coordinando previamente con el cliente para asegurar que la operación del negocio no se vea afectada. |
+| Alcance | El cliente no tiene claridad sobre el alcance completo del sistema ni sobre los procesos operativos que desea formalizar. | Dado que el cliente no sabe ni por dónde empezar, definir un alcance cerrado desde el principio generaría un alto riesgo de reprocesos. El sistema debe construirse de forma incremental, priorizando únicamente las funcionalidades mínimas (modulo inventario y ventas) que resuelvan el problema central del negocio y sean completamente funcionales antes de expandir el alcance hacia los demas modulos del sistema. | Aplicar arquitectura evolutiva, construyendo el sistema de manera incremental a partir de un Mínimo Producto Viable (MVP) funcional que resuelva el problema urgente del negocio. El alcance se irá expandiendo iteración a iteración, validando con el cliente en cada entrega para ir descubriendo y formalizando los procesos operativos a medida que el proyecto avanza |
+| Alcance | El sistema debe poder ser operado y administrado por el dueño de la ferretería de forma autónoma, sin requerir soporte técnico externo para tareas operativas del día a día. | Una ferretería pequeña no cuenta con personal técnico ni con presupuesto para contratar soporte externo de forma recurrente. Si el administrador del sistema necesita ayuda técnica para realizar tareas básicas como crear usuarios, configurar alertas o generar reportes, el negocio no podrá sostener el sistema de forma independiente en el tiempo. | Diseñar los módulos administrativos con una interfaz clara, autoexplicativa y con mensajes de ayuda contextuales que guíen al administrador en cada proceso, reduciendo al mínimo la necesidad de intervención técnica externa para la operación cotidiana del sistema. |
