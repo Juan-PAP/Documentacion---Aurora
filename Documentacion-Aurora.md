@@ -122,40 +122,42 @@ El diagrama de componentes representa la estructura lógica con la que esta cons
 ### **2.1 Componentes del Backend**
 
 | Componente | Anotación | Descripción |
-| ----------- | ----------- | ------------- |
-| **aurora-backend** | `<<jar>>` | Núcleo funcional que contiene la lógica de negocio de la ferretería, exponiendo los servicios a traves de una API REST. |
+| :--- | :--- | :--- |
+| **aurora-backend** | `<<jar>>` | Núcleo funcional que contiene la lógica de negocio de la ferretería, exponiendo los servicios a través de una API REST. |
 | **Java 26** | `<<jre>>` | Entorno de ejecución (Java Runtime Environment) y lenguaje de programación seleccionado para compilar y ejecutar el sistema. |
 | **Spring Framework 7** | `<<framework>>` | Framework subyacente que provee el motor de inyección de dependencias (Inversion of Control) y la arquitectura base del backend. |
-| **Spring boot 4.0.6** | `<<parent>>` | Orquestador principal que autoconfigura el proyecto, provee la estructura inicial y gestiona las versiones de todas las dependencias. |
-| **Posgresql 42.7.10** | `<<jar>>` | Controlador (Driver JDBC) requerido para establecer la conexión física entre la aplicación y la base de datos relacional PostgreSQL. |
-| **mapstruct 1.5.5.Fina** | `<<jar>>` | Herramienta de generación de código que automatiza el mapeo y transformación de datos entre Entidades, Dominios y DTOs. |
+| **Spring Boot 4.0.6** | `<<parent>>` | Orquestador principal que autoconfigura el proyecto, provee la estructura inicial y gestiona las versiones de las dependencias. |
+| **PostgreSQL 42.7.10** | `<<jar>>` | Controlador (Driver JDBC) requerido para establecer la conexión física entre la aplicación y la base de datos relacional. |
+| **mapstruct 1.5.5.Final** | `<<jar>>` | Herramienta de generación de código que automatiza el mapeo y transformación de datos entre Entidades, Dominios y DTOs. |
 | **spring-boot-starter-webmvc** | `<<jar>>` | Módulo encargado de exponer y gestionar los endpoints de la API REST para recibir las peticiones HTTP del Frontend. |
-| **spring-boot-starter-data-jpa** | `<<jar>>` | Capa de persistencia que maneja el mapeo objeto-relacional (ORM), facilitando las consultas y guardado de datos en PostgreSQL. |
+| **spring-boot-starter-data-jpa** | `<<jar>>` | Capa de persistencia que maneja el mapeo objeto-relacional (ORM), facilitando las consultas y guardado de datos. |
 | **spring-boot-starter-data-redis** | `<<jar>>` | Módulo de integración que permite almacenar y consultar datos de alta recurrencia en la memoria caché de Redis. |
-| **spring-boot-starter-security** | `<<jar>>` | Módulo de seguridad encargado de proteger los endpoints, validar tokens JWT y gestionar los roles de los usuarios. |
-| **spring-boot-starter-validation** | `<<jar>>` | Provee validaciones de entrada (Como campos obligatorios, formatos válidos) antes de que la información llegue a la lógica de negocio. |
+| **spring-boot-starter-security** | `<<jar>>` | Módulo de seguridad base encargado de proteger los endpoints, rutas y gestionar la capa de autenticación general. |
+| **spring-boot-starter-oauth2-resource-server** | `<<jar>>` | Módulo específico de seguridad para configurar la aplicación como un Servidor de Recursos, validando tokens JWT. |
+| **spring-boot-starter-validation** | `<<jar>>` | Provee validaciones de entrada (ej. campos obligatorios, formatos válidos) antes de que la información llegue a la lógica de negocio. |
 | **spring-boot-starter-actuator** | `<<jar>>` | Expone métricas operativas y endpoints de estado (health checks) para que herramientas de monitoreo evalúen el rendimiento. |
-| **spring-boot-starter-webmvc-test** | `<<jar>>` | Librería de pruebas que permite simular peticiones HTTP (MockMvc) para validar el comportamiento de los controladores REST. |
-| **spring-boot-starter-data-jpa-test** | `<<jar>>` | Librería que provee un entorno aislado para realizar pruebas unitarias y de integración sobre los repositorios de base de datos. |
-| **spring-boot-starter-data-redis-test** | `<<jar>>` | Utilidades para simular y probar las interacciones y el almacenamiento temporal en la caché de Redis. |
-| **spring-boot-starter-security-test** | `<<jar>>` | Herramientas que permiten simular contextos de seguridad y usuarios autenticados durante las pruebas automatizadas. |
-| **spring-boot-starter-validation-test** | `<<jar>>` | Dependencia utilizada para probar y verificar que las reglas de validación de los modelos de datos se apliquen correctamente. |
-| **spring-boot-starter-actuator-test** | `<<jar>>` | Entorno de pruebas específico para verificar que los endpoints de monitoreo y las métricas se estén exponiendo correctamente. |
+| **spring-boot-starter-cache** | `<<jar>>` | Provee la abstracción y configuración base en Spring para habilitar la gestión transparente de la caché en la aplicación. |
+| **spring-boot-starter-test** | `<<jar>>` | Entorno integral de pruebas que incluye utilidades y librerías (MockMvc, JUnit, etc.) para simular y probar el comportamiento del sistema. |
+| **owasp-java-html-sanitizer** | `<<jar>>` | Herramienta de seguridad encargada de sanitizar las entradas del usuario para prevenir ataques de inyección (como XSS). |
+| **resend-java 3.1.0** | `<<jar>>` | SDK oficial del servicio Resend utilizado para la integración y el envío transaccional de correos electrónicos. |
 
 ### **2.2 Diagrama de Componentes del Backend**
 
 ![omponentes del Backend](DiagramaDeComponentesDelBackend.png)
 
-## **2.3 Componentes del Frontend**
+### **2.3 Componentes del Frontend**
 
 | Componente | Anotación | Descripción |
-| ----------- | ----------- | ------------- |
+| :--- | :--- | :--- |
 | **aurora-frontend** | `<<app>>` | Núcleo interactivo del sistema. Contiene la interfaz de usuario utilizada por los empleados de la ferretería para gestionar ventas, inventario y reportes. |
 | **vue 3.5.32** | `<<parent>>` | Framework progresivo principal de JavaScript, utilizado como motor base para construir las interfaces de usuario de forma estructurada por componentes. |
 | **typescript** | `<<framework>>` | Lenguaje de programación (superconjunto de JavaScript) que añade tipado estricto, mejorando la detección de errores y la mantenibilidad del código del Frontend. |
-| **vue-router 5.0.4** | `<<lib>>` | Librería encargada del enrutamiento en el lado del cliente. Permite la navegación fluida entre los distintos módulos del negocio sin tener que recargar la página completa. |
+| **vue-router 5.0.4** | `<<lib>>` | Librería encargada del enrutamiento en el lado del cliente. Permite la navegación fluida entre los distintos módulos del negocio sin recargar la página completa. |
 | **@auth0/auth0-vue 2.6.1** | `<<lib>>` | SDK oficial de Auth0 para Vue. Gestiona el flujo de autenticación (inicio de sesión), la seguridad de las rutas y la administración de los tokens en el navegador. |
-| **bootstrap 5.3.2** | `<<framework>>` | Framework de diseño (CSS/JS) utilizado para maquetar la interfaz, garantizando que el sistema sea visualmente consistente y responsivo en diferentes pantallas de la ferretería. |
+| **bootstrap 5.3.2** | `<<framework>>` | Framework de diseño (CSS/JS) utilizado para maquetar la interfaz, garantizando que el sistema sea visualmente consistente y responsivo. |
+| **vue-i18n 11.4.4** | `<<lib>>` | Plugin de internacionalización para Vue. Permite gestionar y cambiar dinámicamente los idiomas y las traducciones dentro de la interfaz de usuario. |
+| **pinia 3.0.4** | `<<lib>>` | Librería oficial de gestión de estado global para Vue. Se encarga de centralizar, almacenar y compartir datos reactivos entre múltiples componentes. |
+| **vite 8.0.8** | `<<DevDependency>>` | Herramienta de compilación (build tool) y servidor de desarrollo. Empaqueta el código, transpila TypeScript y optimiza los recursos para el despliegue a producción. |
 
 ### **2.2 Diagrama de Componentes del Frontend**
 
@@ -169,45 +171,58 @@ El diagrama de componentes representa la estructura lógica con la que esta cons
 
 #### **3.2 Descripción General**
 
+# Documentación del Diagrama de Paquetes - Backend Aurora
+
 El diagrama de paquetes describe la organización interna del Backend de Aurora. La arquitectura propende por hacer uso de la arquitectura **Clean Architecture**, por lo que en lugar de agrupar todo el código únicamente por capas técnicas, el sistema se organiza alrededor de funcionalidades específicas del negocio (`features`), encapsulando dentro de cada transacción sus propias capas de aplicación, dominio y mapeo. Las dependencias fluyen siempre desde los detalles técnicos (infraestructura) hacia las reglas del negocio (dominio), protegiendo el núcleo de la ferretería de cambios en tecnologías externas o bases de datos.
 
+### Diccionario de Paquetes
+
 | Paquete | Paquete Padre | Descripción |
-| -------- | ---------------- | ------------- |
+| :--- | :--- | :--- |
 | `co` | - | Paquete raíz del proyecto a nivel de país. |
 | `edu` | `co` | Paquete correspondiente al sector educativo. |
 | `uco` | `edu` | Paquete institucional (Universidad Católica de Oriente). |
 | `aurora` | `uco` | Paquete principal que contiene todo el ecosistema del sistema Aurora. |
-| `features` | `aurora` | Agrupa el código por módulos. |
-| `<domain object>` | `features` | Representa una entidad principal del negocio (ej. `clientes`, `tipo de identificación`, entre otros). |
-| `<transaction>` | `<domain object>` | Agrupa los componentes exclusivos de un caso de uso específico (ej. `añadirCliente`, `buscarCliente`, `buscarTipoIdentificación`). |
+| `features` | `aurora` | Agrupa el código por módulos o funcionalidades. |
+| `<domain object>` | `features` | Representa una entidad principal del negocio (ej. `clientes`, `tipo de identificación`, etc.). |
+| `<transaction>` | `<domain object>` | Agrupa los componentes exclusivos de un caso de uso específico (ej. `añadirCliente`, `buscarCliente`). |
 | `application` | `<transaction>` | Capa de aplicación local de la transacción. Orquesta el flujo de los datos. |
 | `inputport` | `application` | Contiene los puertos de entrada y los DTOs de la petición. |
 | `interactor` | `inputport` | Implementación del puerto de entrada, orquesta la ejecución del caso de uso. |
 | `mapper` | `interactor` | Convierte los DTOs de entrada en modelos procesables por el caso de uso. |
 | `dto` | `inputport` | Objetos de Transferencia de Datos utilizados en la entrada y salida de la aplicación. |
 | `use case` | `application` | Define las interfaces e implementaciones de las reglas puras del negocio. |
-| `impl` | `use case` | Implementación concreta de la lógica y reglas del caso de uso, en este caso Domains. |
+| `impl` | `use case` | Implementación concreta de la lógica y reglas del caso de uso. |
 | `mapper` | `impl` | Transforma modelos intermedios en objetos de dominio y viceversa. |
 | `domain` | `use case` | Contiene entidades y reglas propias del dominio. |
-| `infrastructure` | `aurora` | Capa más externa. Contiene adaptadores web, persistencia y servicios externos. |
+| `validator` | `domain` | Validaciones estructurales y de formato específicas del dominio. |
+| `rule` | `domain` | Reglas de negocio particulares aplicadas al dominio de la transacción. |
+| `infrastructure` | `aurora` | Capa más externa. Contiene adaptadores web, seguridad, persistencia y servicios externos. |
+| `security` | `infrastructure` | Configuraciones y componentes de seguridad de la aplicación. |
 | `controller` | `infrastructure` | Controladores REST (Adaptadores de entrada) que reciben peticiones HTTP. |
 | `dto` | `controller` | DTOs específicos para exponer en los endpoints de la API hacia el Frontend. |
 | `persistence` | `infrastructure` | Implementación de acceso a base de datos. |
-| `repository` | `persistence` | Interfaces de repositorios (Spring Data) y contratos de acceso a datos. |
+| `repository` | `persistence` | Interfaces de repositorios y contratos de acceso a datos. |
 | `adapter` | `persistence` | Adaptadores concretos que conectan la lógica con la tecnología de base de datos. |
-| `sql` | `adapter` | Adaptadores específicos para bases de datos relacionales (PostgreSQL). |
+| `sql` | `adapter` | Adaptadores específicos para bases de datos relacionales. |
 | `jpa` | `sql` | Implementación de persistencia utilizando el estándar JPA. |
 | `mapper` | `jpa` | Convierte entidades de base de datos (JPA) a entidades para su uso en la aplicación. |
 | `entity` | `jpa` | Modelos de datos técnicos mapeados a tablas de base de datos (`@Entity`). |
-| `entity` | `persistence` | Definiciones base para las entidades. |
-| `external services` | `infrastructure` | Adaptadores para consumir APIs de terceros, como el envío de correos y la seguridad. |
+| `entity` | `persistence` | Definiciones base para las entidades de persistencia. |
+| `externalservices` | `infrastructure` | Adaptadores para consumir APIs y servicios de terceros. |
+| `resend` | `externalservices` | Integración con el servicio Resend para el envío de correos electrónicos. |
+| `strapi` | `externalservices` | Integración con el Headless CMS Strapi. |
+| `message-catalog` | `strapi` | Consumo del catálogo de mensajes gestionado desde Strapi. |
+| `parameter-catalog` | `strapi` | Consumo del catálogo de parámetros del sistema gestionado desde Strapi. |
+| `notification-catalog` | `strapi` | Consumo del catálogo de notificaciones gestionado desde Strapi. |
 | `application` | `aurora` | Capa de aplicación transversal compartida entre múltiples `features`. |
 | `inputport` | `application` | Puertos de entrada genéricos o compartidos. |
 | `use case` | `application` | Contratos de casos de uso compartidos en todo el sistema. |
+| `rule` | `use case` | Contratos de reglas de negocio transversales y compartidas. |
 | `crosscutting` | `aurora` | Componentes transversales reutilizables por todas las demás capas. |
-| `Helper` | `crosscutting` | Clases utilitarias. |
+| `Helper` | `crosscutting` | Clases utilitarias generales. |
 | `exception` | `crosscutting` | Tipos de excepciones personalizadas y manejo centralizado de errores. |
-| `sanitizer` | `crosscutting` | Utilidades de limpieza y validación transversal de datos para evitar inyecciones SQL. |
+| `sanitizer` | `crosscutting` | Utilidades de limpieza y validación transversal de datos para evitar inyecciones. |
 
 ### **3.3 Imagen del Diagrama de Paquetes — Backend**
 
@@ -217,23 +232,22 @@ El diagrama de paquetes describe la organización interna del Backend de Aurora.
 
 #### **3.5 Descripción General**
 
-Organización del código fuente del Frontend de Aurora desarrollado en Vue. La arquitectura separa el punto de entrada, las vistas de usuario, la lógica de comunicación con el API (servicios) y las dependencias externas (Node Modules), garantizando un flujo de datos ordenado hacia el API Gateway y posteriormente al Backend.
+# Documentación del Diagrama de Paquetes - Frontend Aurora
+
+El diagrama de paquetes describe la organización interna de la aplicación Frontend de Aurora. La arquitectura sigue un enfoque modular basado en componentes, separando claramente las responsabilidades de la interfaz de usuario, la navegación, el manejo de idiomas y la comunicación con el Backend. Las dependencias fluyen desde el enrutador hacia las vistas, y de las vistas hacia componentes más pequeños y servicios compartidos, garantizando una alta cohesión y bajo acoplamiento.
+
+### Diccionario de Paquetes
 
 | Paquete | Paquete Padre | Descripción |
-|--------|----------------|-------------|
-| `aurora frontend` | - | Paquete principal que contiene todo el ecosistema de la aplicación. |
-| `src` | `aurora frontend` | Carpeta principal que aloja el código fuente de la aplicación desarrollada por el equipo. |
-| `main` | `src` | Punto de entrada principal de la aplicación Vue. Inicializa configuraciones globales, plugins, enrutador y dependencias. |
-| `app` | `src` | Componente raíz (App.vue) que actúa como contenedor principal y envuelve toda la estructura de la interfaz. |
-| `router` | `src` | Configuración del enrutamiento de la aplicación (Single Page Application), definiendo la navegación y control de acceso. |
-| `views` | `src` | Contiene las pantallas o páginas completas del sistema (ej: vista de los clientes, pantalla de inicio). |
-| `components` | `src` | Componentes de interfaz de usuario reutilizables (botones, formularios) que componen las vistas. |
-| `services` | `src` | Encargado de la comunicación externa. Gestiona las peticiones HTTP y la integración con el *Zuplo API Gateway*. |
-| `interfaces` | `src` | Definición de tipos y contratos de datos (TypeScript) para estandarizar la información que maneja el frontend. |
-| `node modules` | `aurora frontend` | Directorio gestionado por el administrador de paquetes (npm/yarn) que contiene las dependencias de terceros. |
-| `vue-router` | `node modules` | Librería externa oficial de Vue utilizada para gestionar la navegación entre componentes. |
-| `auth0` | `node modules` | SDK externo implementado para gestionar la autenticación, identidad y seguridad de los usuarios. |
-| `Zuplo api gateway` | - | Nodo externo (fuera del frontend) que actúa como puerta de enlace para las peticiones hacia el backend. |
+| :--- | :--- | :--- |
+| `aurora frontend` | - | Paquete raíz del proyecto Frontend. |
+| `src` | `aurora frontend` | Directorio principal que contiene todo el código fuente de la aplicación. |
+| `router` | `src` | Contiene la configuración de enrutamiento y la lógica de navegación entre las distintas vistas. |
+| `views` | `src` | Representa las páginas completas o vistas principales a las que el usuario puede navegar. |
+| `components` | `src` | Contiene los componentes visuales e interactivos reutilizables de la interfaz de usuario. |
+| `services` | `src` | Encapsula la lógica de negocio, peticiones HTTP y comunicación directa con las APIs del Backend. |
+| `interfaces` | `src` | Definición de los contratos de datos, modelos y tipados (comúnmente usado en TypeScript). |
+| `i18n` | `src` | Manejo de la internacionalización, conteniendo las traducciones y la configuración de múltiples idiomas. |
 
 ### **3.3 Imagen del Diagrama de Paquetes — Frontend**
 
