@@ -18,7 +18,7 @@ Este documento describe la arquitectura de Aurora desde los siguientes puntos, s
 - **Despliegue:** define los componentes adoptados y desarrollados que conforman la solución, su ubicación dentro de la infraestructura y el como se relacionan entre ellos.
 - **Componentes:** presenta los módulos lógicos del backend y el frontend, detallando las responsabilidades de cada uno y cómo se comunican entre sí para soportar la operación del sistema.
 - **Paquetes:** describe la organización interna del código bajo una arquitectura en capas, estableciendo las dependencias permitidas entre ellas y los límites que garantizan la mantenibilidad y escalabilidad del sistema.
-- **Secuencias:** f
+- **Secuencias:** muestra la interacción general de la arquitectura con las capas anteriores, con el fin de generar un entendimiento del flujo que se sigue por cada transacción que puede involucrar o no retorno de datos.
 
 ## **1. Diagrama de Despliegue**
 
@@ -210,11 +210,13 @@ El diagrama de paquetes describe la organización interna del Backend de Aurora,
 | `entity` | `jpa` | Modelos de datos técnicos mapeados a tablas de base de datos (`@Entity`). |
 | `entity` | `persistence` | Definiciones base para las entidades de persistencia. |
 | `externalservices` | `infrastructure` | Adaptadores para consumir APIs y servicios de terceros. |
-| `resend` | `externalservices` | Integración con el servicio Resend para el envío de correos electrónicos. |
-| `strapi` | `externalservices` | Integración con el Headless CMS Strapi. |
-| `message-catalog` | `strapi` | Consumo del catálogo de mensajes gestionado desde Strapi. |
-| `parameter-catalog` | `strapi` | Consumo del catálogo de parámetros del sistema gestionado desde Strapi. |
-| `notification-catalog` | `strapi` | Consumo del catálogo de notificaciones gestionado desde Strapi. |
+| `notification` | `externalservices` | Integración para el manejo y envío de notificaciones del sistema. |
+| `messagecatalog` | `externalservices` | Consumo y gestión del catálogo de mensajes de la aplicación. |
+| `notificationcatalog` | `externalservices` | Consumo y gestión de configuraciones del catálogo de notificaciones. |
+| `parametercatalog` | `externalservices` | Consumo y gestión del catálogo de parámetros del sistema. |
+| `adapter` | Servicios Externos | Adaptadores específicos para la comunicación HTTP con cada servicio externo. |
+| `mapper` | `adapter` | Transforma las respuestas de los servicios externos a modelos entendibles por Aurora. |
+| `dto` | Servicios Externos | Objetos de Transferencia de Datos utilizados para intercambiar información con las APIs de terceros. |
 | `application` | `aurora` | Capa de aplicación transversal compartida entre múltiples `features`. |
 | `inputport` | `application` | Puertos de entrada genéricos o compartidos. |
 | `use case` | `application` | Contratos de casos de uso compartidos en todo el sistema. |
@@ -246,8 +248,8 @@ El diagrama de paquetes describe la organización interna de la aplicación Fron
 | `views` | `src` | Representa las páginas completas o vistas principales a las que el usuario puede navegar. |
 | `components` | `src` | Contiene los componentes visuales e interactivos reutilizables de la interfaz de usuario. |
 | `services` | `src` | Encapsula la lógica de negocio, peticiones HTTP y comunicación directa con las APIs del Backend. |
-| `interfaces` | `src` | Definición de los contratos de datos, modelos y tipados (comúnmente usado en TypeScript). |
 | `i18n` | `src` | Manejo de la internacionalización, conteniendo las traducciones y la configuración de múltiples idiomas. |
+| `interfaces` | `src` | Capa transversal que define los contratos de datos, modelos y tipados (TypeScript). Es consumida transversalmente por múltiples paquetes como vistas y servicios. |
 
 ### **3.3 Imagen del Diagrama de Paquetes — Frontend**
 
@@ -255,7 +257,7 @@ El diagrama de paquetes describe la organización interna de la aplicación Fron
 
 ## **4. Diagrama de Secuencia**
 
-El siguiente diagrama de secuencia muestra la interacción general de la arquitectura por capas anterio, con el fin de generar un entendimiento del flujo que se sigue por cada transacción que puede involucrar o no retorno de datos.
+El siguiente diagrama de secuencia muestra la interacción general de la arquitectura con las capas anteriores, con el fin de generar un entendimiento del flujo que se sigue por cada transacción que puede involucrar o no retorno de datos.
 
 ### **4.1 Diagramas BackEnd**
 
