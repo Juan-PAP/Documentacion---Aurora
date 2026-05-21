@@ -257,7 +257,25 @@ El diagrama de paquetes describe la organización interna de la aplicación Fron
 
 El siguiente diagrama de secuencia muestra la interacción general de la arquitectura por capas anterio, con el fin de generar un entendimiento del flujo que se sigue por cada transacción que puede involucrar o no retorno de datos.
 
-*(Espacio reservado para el diagrama de secuencia. Se agregará una vez esté definido el flujo de interacción entre los componentes).*
+### **4.1 Diagramas BackEnd**
+
+#### Modelo De Capas Backend
+
+![Modelo De Capas Backend](ModeloDeCapasBackend.png)
+
+#### Modelo De Secuencias Backend
+
+![Modelo De Secuencias Backend](DiagramaDeSecuenciaBackend.png)
+
+### **4.2 Diagramas FrontEnd**
+
+#### Modelo De Capas Frontend
+
+![Modelo De Capas Frontend](ModeloDeCapasFrontend.jpeg)
+
+#### Modelo De Secuencias Frontend
+
+![Modelo De Secuencias Frontend](ModeloDeSecuenciaFrontEnd.jpeg)
 
 ---
 
