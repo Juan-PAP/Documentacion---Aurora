@@ -111,7 +111,7 @@ Este diagrama tambien corresponde al Arquetipo de Referencia de la aplicación.
 
 ![Plataformas Tecnologicas - Arquitectura de Referencia](ArquitecturaDeReferencia.png)
 
-Este diagrama tambien corresponde ala Arquitectura de Referencia de la aplicación.
+Este diagrama tambien corresponde a la Arquitectura de Referencia de la aplicación.
 
 ---
 
@@ -173,7 +173,7 @@ El diagrama de componentes representa la estructura lógica con la que esta cons
 
 # Documentación del Diagrama de Paquetes - Backend Aurora
 
-El diagrama de paquetes describe la organización interna del Backend de Aurora. La arquitectura propende por hacer uso de la arquitectura **Clean Architecture**, por lo que en lugar de agrupar todo el código únicamente por capas técnicas, el sistema se organiza alrededor de funcionalidades específicas del negocio (`features`), encapsulando dentro de cada transacción sus propias capas de aplicación, dominio y mapeo. Las dependencias fluyen siempre desde los detalles técnicos (infraestructura) hacia las reglas del negocio (dominio), protegiendo el núcleo de la ferretería de cambios en tecnologías externas o bases de datos.
+El diagrama de paquetes describe la organización interna del Backend de Aurora, propendiendo por hacer uso de la arquitectura **Clean Architecture**
 
 ### Diccionario de Paquetes
 
@@ -234,7 +234,7 @@ El diagrama de paquetes describe la organización interna del Backend de Aurora.
 
 # Documentación del Diagrama de Paquetes - Frontend Aurora
 
-El diagrama de paquetes describe la organización interna de la aplicación Frontend de Aurora. La arquitectura sigue un enfoque modular basado en componentes, separando claramente las responsabilidades de la interfaz de usuario, la navegación, el manejo de idiomas y la comunicación con el Backend. Las dependencias fluyen desde el enrutador hacia las vistas, y de las vistas hacia componentes más pequeños y servicios compartidos, garantizando una alta cohesión y bajo acoplamiento.
+El diagrama de paquetes describe la organización interna de la aplicación Frontend de Aurora, mostrando un enfoque separando las responsabilidades y la comunicación con el Backend.
 
 ### Diccionario de Paquetes
 
@@ -254,6 +254,8 @@ El diagrama de paquetes describe la organización interna de la aplicación Fron
 ![Diagrama de Paquetes — Frontend](DiagramaPaquetesFrontend.png)
 
 ## **4. Diagrama de Secuencia**
+
+El siguiente diagrama de secuencia muestra la interacción general de la arquitectura por capas anterio, con el fin de generar un entendimiento del flujo que se sigue por cada transacción que puede involucrar o no retorno de datos.
 
 *(Espacio reservado para el diagrama de secuencia. Se agregará una vez esté definido el flujo de interacción entre los componentes).*
 
