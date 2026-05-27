@@ -121,6 +121,8 @@ El diagrama de componentes representa la estructura lógica con la que esta cons
 
 ### **2.1 Componentes del Backend**
 
+### Diagrama de Componentes del Backend
+
 | Componente | Anotación | Descripción |
 | :--- | :--- | :--- |
 | **aurora-backend** | `<<jar>>` | Núcleo funcional que contiene la lógica de negocio de la ferretería, exponiendo los servicios a través de una API REST. |
@@ -140,6 +142,7 @@ El diagrama de componentes representa la estructura lógica con la que esta cons
 | **spring-boot-starter-test** | `<<jar>>` | Entorno integral de pruebas que incluye utilidades y librerías (MockMvc, JUnit, etc.) para simular y probar el comportamiento del sistema. |
 | **owasp-java-html-sanitizer** | `<<jar>>` | Herramienta de seguridad encargada de sanitizar las entradas del usuario para prevenir ataques de inyección (como XSS). |
 | **resend-java 3.1.0** | `<<jar>>` | SDK oficial del servicio Resend utilizado para la integración y el envío transaccional de correos electrónicos. |
+| **springdoc-openapi-starter-webmvc-ui** | `<<jar>>` | Librería encargada de generar y exponer automáticamente la documentación interactiva de la API REST (Swagger UI) siguiendo el estándar OpenAPI. |
 
 ### **2.2 Diagrama de Componentes del Backend**
 
